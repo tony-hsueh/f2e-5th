@@ -1,0 +1,78 @@
+.my-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  height: 70px;
+}
+
+.my-navbar > a {
+  display: none;
+  text-decoration: none;
+  padding: 1rem .5rem;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 700;
+  transition: .25s ease-in;
+}
+
+.my-navbar > a:hover,
+.offcanvas-body > a:hover {
+  color: #BDBDBD;
+}
+
+.mobile-burger {
+  border: none;
+  font-size: 2rem;
+  background-color: transparent;
+}
+
+.offcanvas-header {
+  padding: 1rem 1.5rem !important;
+}
+
+.offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.offcanvas-body > a {
+  margin-top: .5rem;
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  padding: .5rem .5rem;
+  color: #333333;
+  font-size: 20px;
+  font-weight: 700;
+  transition: .25s ease-in;
+}
+
+.candidate-number {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #FFE871;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+}
+
+@media (min-width: 992px) {
+  .my-navbar > a {
+    display: block;
+  }
+
+  .mobile-burger {
+    display: none;
+  }
+}
