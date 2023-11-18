@@ -35,7 +35,7 @@ import twitter from './assets/image/twitter.png'
 import instagram from './assets/image/instagram.png'
 import facebook from './assets/image/facebook.png'
 import footerDeco from './assets/image/footer-deco.png'
-import Navbar from './component/navbar/Navbar'
+import Navbar from './component/Navbar/Navbar'
 import { fakeActives, fakeIssue } from './fakeDb'
 import { MODAL_TYPE, PAY_METHOD } from './constant'
 import './App.css';
