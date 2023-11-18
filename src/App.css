@@ -1,9 +1,160 @@
+.App {
+  overflow: hidden;
+}
+
 .banner {
   width: 100%;
   padding: 4rem 0 .5rem;
   background-image: url('./assets/image/banner.png');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.cursor {
+  position: absolute;
+  pointer-events: none;
+  width: 80px;
+  height: auto;
+  z-index: 10000;
+}
+
+/* 最新活動 modal */
+.card-modal > .modal-dialog {
+  justify-content: center;
+}
+
+.card-modal  .modal-content {
+  width: fit-content;
+}
+
+/* 捐贈規定 modal */
+.donate-modal-bg {
+  background-color: #bdbdbd;
+}
+
+.donate-modal {
+  border: 6px solid #4F4F4F;
+  border-radius: 8px;
+  padding: 2rem 1rem;
+}
+
+.donate-modal-img {
+  pointer-events: none;
+  text-align: center;
+  position: absolute;
+  top: -130px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.donate-modal-img > img {
+  width: 200px;
+  height: auto;
+}
+
+.donate-modal > .step1-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1D1D1D;
+}
+
+.step-container {
+  padding: 1rem;
+}
+
+.step2-title {
+  color: #092c4c;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.cost-list {
+  padding-bottom: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.cost-list > h5 {
+  color: #1D1D1D;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.radio-container {
+  margin-top: 1.5rem;
+}
+
+.pay-method-radio {
+  margin-top: 1rem;
+  font-size: 18px;
+}
+
+.pay-method-radio > .form-check-input:checked {
+  background-color: #FFE871;
+  border-color: #FFE871;
+}
+
+.checkout-btn {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #FFE871;
+  border: none;
+}
+
+.radio-container > .latest-card--mobile:hover {
+  font-size: 1rem;
+}
+
+.donate-rule-list {
+  height: 250px;
+  overflow: auto;
+}
+
+.donate-rule-list > p {
+  color: #1D1D1D;
+  font-weight: 700;
+}
+
+.btns-wrap {
+  width: 100%;
+  position: absolute;
+  bottom: -8.5rem;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btns-wrap > button:last-child {
+  font-size: 1.2rem;
+  border: 4px solid #4F4F4F;
+  border-radius: 8px;
+  background-color: transparent;
+  font-weight: 700;
+  color: #4F4F4F;
+  padding: .5rem 1rem;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btns-wrap > button:first-child {
+  font-size: 1.2rem;
+  border: 4px solid transparent;
+  border-radius: 8px;
+  background-color: #4F4F4F;
+  font-weight: 700;
+  color: white;
+  padding: .5rem 1rem;
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
 }
 
 .to-top-btn {
@@ -15,7 +166,7 @@
   border-radius: 12px;
   box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.25);
   position: fixed;
-  bottom: 32px;
+  bottom: 120px;
   right: 24px;
   z-index: 999;
   padding: .35rem .5rem;
@@ -197,6 +348,9 @@
 /* 最新活動 */
 section.latest {
   background-color: #E4DF8F;
+  background-image: url('./assets//image/activity-bg.png');
+  background-repeat: no-repeat;
+  background-position: right;
   padding: 2rem 0;
   position: relative;
 }
@@ -210,16 +364,23 @@ section.latest {
   justify-content: flex-start;
 }
 
-.latest-card--mobile {
+.latest-card {
   position: relative;
   border-radius: 8px;
   background-color: white;
-  width: 250px;
   overflow: hidden;
   flex: 0 0 auto;
   cursor: pointer;
+}
+
+.latest-card--mobile {
+  width: 250px;
   border: 3px solid #E4DF8F;
   transition: .25s ease-in;
+}
+
+.latest-card--modal {
+  width: 360px;
 }
 
 .latest-card--mobile:hover {
@@ -230,7 +391,7 @@ section.latest {
   margin-left: .5rem;
 }
 
-.latest-card--mobile > .card-date {
+.card-date {
   position: absolute;
   top: 0;
   left: 0;
@@ -244,9 +405,24 @@ section.latest {
   padding: .25rem 0;
 }
 
+.latest-card--modal .card-date {
+  bottom: 12px;
+  right: 0;
+  left: unset;
+  top: unset;
+}
+
 .latest-card--mobile > .top-img {
   width: 100%;
   height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 5% center;
+}
+
+.latest-card--modal > .top-img {
+  width: 100%;
+  height: 300px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 5% center;
@@ -268,20 +444,25 @@ section.latest {
   background-image: url('./assets/image/activity3.png');
 }
 
-.latest-card--mobile > .card-content {
+.latest-card > .card-content {
   width: 100%;
   padding: 1rem;
 }
 
-.latest-card--mobile  .card-title {
+.latest-card  .card-title {
   font-weight: 700;
   font-size: 1.2rem;
   color: #1D1D1D;
 }
 
-.latest-card--mobile  .card-desc {
+.latest-card .card-desc {
   font-size: 1rem;
   color: #4F4F4F;
+  margin-top: 1rem;
+  letter-spacing: .45px;
+}
+
+.latest-card--mobile  .card-desc {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -299,6 +480,50 @@ section.latest {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 1.5rem 1rem 1.5rem 2rem;
   overflow: hidden;
+}
+
+.activity-timeline {
+  width: fit-content !important;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.toast-container {
+  pointer-events: all !important;
+  position: fixed !important;
+  top: 1rem;
+  min-width: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+}
+
+.toast-body {
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.deco-line--top {
+  position: absolute;
+  width: 4px;
+  height: 50%;
+  background-color: #333333;
+  top: 0;
+  left: calc(50% - 2px);
+}
+
+.deco-line--bottom {
+  position: absolute;
+  width: 4px;
+  height: 50%;
+  background-color: #333333;
+  bottom: 0;
+  left: calc(50% - 2px);
 }
 
 .card-content {
@@ -360,8 +585,23 @@ section.issues {
 .carousel-wrap {
   padding: 0 2.5rem 1.5rem;
   border: 4px solid black;
-  border-radius: 1.5rem;
+  border-radius: .5rem;
   background-color: #FFF99F;
+}
+
+.carousel-wrap--modal {
+  height: 500px;
+  overflow: auto;
+}
+
+.carousel-wrap--modal .issue-tab{
+  position: absolute;
+  top: 0;
+  left: 24px;
+}
+
+.carousel-wrap--modal .issue-title{
+  margin-top: 60px;
 }
 
 .mySwiper {
@@ -611,16 +851,23 @@ section.donate {
   font-size: 20px;
   color: white;
   background-color: #4F4F4F;
-  border: none;
+  border: 4px solid transparent;
   border-radius: 8px;
   padding: 8px 0;
   margin-top: 1rem;
+  transition: .25s ease-in;
+}
+
+.donate-cta:hover {
+  background-color: transparent;
+  border: 4px solid #4F4F4F;
+  color: #4F4F4F;
 }
 /* comment */
 .comment {
   position: relative;
   padding: 3rem 1rem 3rem 1rem;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .comment-title {
@@ -713,10 +960,14 @@ section.donate {
   color: #4F4F4F;
 }
 
+.submit-btn-wrap {
+  width: 100%;
+}
+
 .submit-btn {
   padding: .75rem;
   margin-left: auto;
-  width: 220px;
+  width: 100%;
   border: none;
   border-radius: 8px;
   background-color: #1D1D1D;
@@ -1135,6 +1386,7 @@ footer {
   }
 
   .donate-cta {
+    font-weight: 700;
     padding: 1rem 0;
     margin-top: 1.2rem;
   }
@@ -1150,6 +1402,70 @@ footer {
   .go-donate-card::before {
     top: -6px;
     right: 74px;
+  }
+
+  .submit-btn-wrap {
+    width: 50%;
+  }
+
+  .submit-btn {
+    width: 220px;
+  }
+
+  .donate-modal > .step1-title,
+  .step2-title {
+    font-size: 40px;
+  }
+
+  .btns-wrap > button:last-child {
+    padding: 1rem;
+    font-size: 1.2rem;
+    width: 210px;
+  }
+  
+  .btns-wrap > button:first-child {
+    padding: 1rem;
+    font-size: 1.2rem;
+    width: 460px;
+  }
+
+  .donate-rule-list {
+    height: 450px;
+  }
+
+  .btns-wrap {
+    bottom: -5.5rem;
+  }
+
+  .donate-modal-bg > .modal-dialog {
+    align-items: center;
+    padding-top: unset;
+  }
+
+  .donate-modal-img > img {
+    width: 295px;
+  }
+
+  .donate-modal-img {
+    top: -192px;
+  }
+
+  .cost-container {
+    padding-left: 1rem;
+  }
+
+  .cost-list > h5 {
+    font-size: 2rem;
+  }
+
+  .pay-method-radio {
+    font-size: 1.25rem;
+  }
+
+  .checkout-btn {
+    display: block;
+    margin: 3.5rem auto 0;
+    width: 40%;
   }
 }
 
