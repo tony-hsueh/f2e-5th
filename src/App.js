@@ -35,6 +35,7 @@ import twitter from './assets/image/twitter.png'
 import instagram from './assets/image/instagram.png'
 import facebook from './assets/image/facebook.png'
 import footerDeco from './assets/image/footer-deco.png'
+import loadingLogo from './assets/image/loading-logo.png'
 import Navbar from './component/Navbar/Navbar'
 import { fakeActives, fakeIssue } from './fakeDb'
 import { MODAL_TYPE, PAY_METHOD } from './constant'
@@ -214,6 +215,7 @@ function App() {
   const [issueIndex, setIssueIndex] = useState(0)
   const [counter, setCounter] = useState('0')
   const [toastShow, setToastShow] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   // 建議表單欄位
   const nameInput = useRef()
   const phoneInput = useRef()
@@ -245,7 +247,9 @@ function App() {
       }
     })
   }
-  const observer = new IntersectionObserver(callback)
+  const observer = new IntersectionObserver(callback, {
+    rootMargin: window.innerWidth > 1200 ? "-200px" : "0px"
+  })
 
   const handleDonate = (e) => {
     setPrice(e.target.value)
@@ -269,11 +273,15 @@ function App() {
       })
       return
     }
-    setToastShow(true)
-    setToastMessage({
-      status: 'success',
-      message: '表單提交完成，謝謝您寶貴的意見',
-    })
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      setToastShow(true)
+      setToastMessage({
+        status: 'success',
+        message: '表單提交完成，謝謝您寶貴的意見',
+      })
+    }, 1500);
   }
 
   const displayToTopButton = () => {
@@ -319,6 +327,18 @@ function App() {
   }, [])
   return (
     <div className="App">
+      {isLoading &&
+        <div className='loading-wrap'>
+          <div className='loading-img'>
+            <img src={loadingLogo} alt="loading-img"/>
+          </div>
+          <h2>喵立翰</h2>
+          <h2>台灣的明天 喵先鋪路</h2>
+          <div className='animation-bar'>
+            <div className='animation-line'></div>
+          </div>
+        </div>
+      }
       {window.innerWidth > 1024 &&
         <img
           style={{ top: cursorCoor.y, left: cursorCoor.x}}
