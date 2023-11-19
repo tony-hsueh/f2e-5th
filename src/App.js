@@ -293,6 +293,7 @@ function App() {
   }
 
   const openModal = (displayData, type) => {
+    if (window.innerWidth > 992) return 
     setShow(true)
     setModalData(displayData)
     setTypeOfData(type)
