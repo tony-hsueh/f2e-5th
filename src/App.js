@@ -71,9 +71,30 @@ const IssueContent = ({ modalData }) => {
   )
 }
 
-const DonateContent = memo(({ price, setDonateShow, setPrice }) => {
+const DonateContent = memo(({ price, setDonateShow, setPrice, setToastMessage, setToastShow }) => {
   const [step, setStep] = useState(1)
   const priceArr = price.split('').reverse()
+
+  const handlePayment = (e) => {
+    e.preventDefault()
+    const data = new FormData(e.target)
+    // 未選擇支付方式
+    if (!data.get('paymethod')) {
+      setToastShow(true)
+      setToastMessage({
+        status: 'warning',
+        message: '請選擇支付方式',
+      })
+      return;
+    }
+    setToastShow(true)
+    setToastMessage({
+      status: 'success',
+      message: '感謝您慷慨捐獻',
+    })
+    setDonateShow(false)
+    setPrice('')
+  }
 
   if (price.length > 3) {
     price.split('').reverse().forEach((word, index) => {
@@ -142,40 +163,39 @@ const DonateContent = memo(({ price, setDonateShow, setPrice }) => {
               <h5>NT$ {priceArr.reverse().join('')}</h5>
             </div>
             <div className='radio-container'>
-              <Form.Check
-                name='paymethod'
-                className='pay-method-radio'
-                type='radio'
-                id='credit-card'
-                label='信用卡付款'
-                value={PAY_METHOD.creditCard}
-              />
-              <Form.Check
-                name='paymethod'
-                className='pay-method-radio'
-                type='radio'
-                id='online-transfer'
-                label='線上轉帳'
-                value={PAY_METHOD.onlineTransfer}
-              />
-              <Form.Check
-                name='paymethod'
-                className='pay-method-radio'
-                type='radio'
-                id='linepay'
-                label='LinePay'
-                value={PAY_METHOD.linepay}
-              />
+              <form onSubmit={handlePayment}>
+                <Form.Check
+                  name='paymethod'
+                  className='pay-method-radio'
+                  type='radio'
+                  id='credit-card'
+                  label='信用卡付款'
+                  value={PAY_METHOD.creditCard}
+                />
+                <Form.Check
+                  name='paymethod'
+                  className='pay-method-radio'
+                  type='radio'
+                  id='online-transfer'
+                  label='線上轉帳'
+                  value={PAY_METHOD.onlineTransfer}
+                />
+                <Form.Check
+                  name='paymethod'
+                  className='pay-method-radio'
+                  type='radio'
+                  id='linepay'
+                  label='LinePay'
+                  value={PAY_METHOD.linepay}
+                />
+                <button 
+                  className='checkout-btn'
+                  type='submit'
+                >
+                  確認結帳
+                </button>
+              </form>
             </div>
-            <button 
-              className='checkout-btn'
-              onClick={() => { 
-                setDonateShow(false)
-                setPrice('')
-              }}
-            >
-              確認結帳
-            </button>
           </div>
         </div>
       }
@@ -194,6 +214,11 @@ function App() {
   const [issueIndex, setIssueIndex] = useState(0)
   const [counter, setCounter] = useState('0')
   const [toastShow, setToastShow] = useState(false)
+  // 建議表單欄位
+  const nameInput = useRef()
+  const phoneInput = useRef()
+  const emailInput = useRef()
+  const commentInput = useRef()
   const [toastMessage, setToastMessage] = useState({
     status: 'primary',
     message: '',
@@ -204,6 +229,7 @@ function App() {
   const callback = (entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
+        console.log('交會囉');
         observer.unobserve(couterDiv.current)
         counterTimer = setInterval(() => {
           setCounter(prev => {
@@ -219,7 +245,7 @@ function App() {
       }
     })
   }
-  const observer = new IntersectionObserver(callback, {rootMargin: '-200px'})
+  const observer = new IntersectionObserver(callback)
 
   const handleDonate = (e) => {
     setPrice(e.target.value)
@@ -229,6 +255,24 @@ function App() {
     window.scroll({
       top: 0,
       behavior: 'smooth',
+    })
+  }
+
+  const handleComment = (e) => {
+    e.preventDefault()
+    // 有填寫建議就可以成功提交了
+    if (commentInput.current.value === '') {
+      setToastShow(true)
+      setToastMessage({
+        status: 'warning',
+        message: '請至少填個建議呦',
+      })
+      return
+    }
+    setToastShow(true)
+    setToastMessage({
+      status: 'success',
+      message: '表單提交完成，謝謝您寶貴的意見',
     })
   }
 
@@ -319,7 +363,9 @@ function App() {
         <DonateContent 
           price={price} 
           setPrice={setPrice} 
-          setDonateShow={setDonateShow}  
+          setDonateShow={setDonateShow} 
+          setToastShow={setToastShow}
+          setToastMessage={setToastMessage} 
         />
       </Modal>
     {isShownToTopBtn &&
@@ -830,25 +876,45 @@ function App() {
               data-aos-delay="800"
               data-aos-duration="1000"
             >
-              <form>
+              <form onSubmit={handleComment}>
                 <label htmlFor='name' className='field'>
                   <div>姓名</div>
-                  <input id='name' type='text' placeholder='您的姓名'/>
+                  <input 
+                    id='name' 
+                    type='text' 
+                    placeholder='您的姓名'
+                    ref={nameInput}
+                  />
                 </label>
                 <label htmlFor='email' className='field'>
                   <div>電子信箱</div>
-                  <input id='email' type='email' placeholder='您的電子信箱'/>
+                  <input 
+                    id='email' 
+                    type='email' 
+                    placeholder='您的電子信箱'
+                    ref={emailInput}
+                  />
                 </label>
                 <label htmlFor='phone' className='field'>
                   <div>手機</div>
-                  <input id='phone' type='text' placeholder='您的手機'/>
+                  <input 
+                    id='phone' 
+                    type='text' 
+                    placeholder='您的手機'
+                    ref={phoneInput}
+                  />
                 </label>
                 <label htmlFor='comment' className='field'>
                   <div>建言</div>
-                  <textarea id='comment' rows='7' placeholder='您的建言'/>
+                  <textarea 
+                    id='comment' 
+                    rows='7' 
+                    placeholder='您的建言'
+                    ref={commentInput}
+                  />
                 </label>
                 <div className='submit-btn-wrap mx-auto'>
-                  <button className='submit-btn'>
+                  <button className='submit-btn' type='submit'>
                     <div className='chevron-icon'><FaChevronRight /></div>
                     <div>送出意見</div>
                   </button>
