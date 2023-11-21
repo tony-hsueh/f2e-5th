@@ -11,7 +11,7 @@
 
 ## 系統說明
 專案運行方式請先 npm install 安裝套件，接著 npm start 就可以啟動了。
-Nodejs 版本
+Nodejs 版本 14.19.1
 
 ## 資料夾說明
 * public - favicon、index.html
@@ -19,7 +19,7 @@ Nodejs 版本
 * component - 常用元件(e.g. Navbar)
 
 ## 使用技術
-* React (CRA)
+* React18 (CRA)
 * Swiper
 * AOS
 * React-icons
