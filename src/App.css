@@ -2,69 +2,6 @@
   overflow: hidden;
 }
 
-.loading-wrap {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.loading-img {
-  width: 60px;
-  margin-bottom: .25rem;
-}
-
-.loading-img > img {
-  width: 100%;
-  height: auto;
-}
-
-.loading-wrap > h2 {
-  color: #828282;
-  font-size: 1.5rem;
-  font-weight: 900;
-}
-
-.animation-bar {
-  width: 50%;
-  min-width: 116px;
-  max-width: 150px;
-  background-color: #828282;
-  position: relative;
-  padding: 8px 0;
-  margin-top: .25rem;
-  border-radius: 8px;
-}
-
-.animation-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 30%;
-  padding: 8px 0;
-  background-color: #FFE871;
-  border-radius: 8px;
-  animation: slide 2s linear  infinite alternate-reverse;
-}
-
-@keyframes slide {
-  from {
-    left: 0;
-    transform: translateX(0);
-  }
-  to {
-    left: 100%;
-    transform: translateX(-100%);
-  }
-}
-
 .banner {
   width: 100%;
   padding: 4rem 0 .5rem;
@@ -1014,6 +951,10 @@ section.donate {
   font-weight: 700;
 }
 
+.field .required-mark {
+  color: rgb(246, 61, 61);
+}
+
 .field > input,
 .field > textarea {
   width: 100%;
@@ -1529,18 +1470,6 @@ footer {
     display: block;
     margin: 3.5rem auto 0;
     width: 40%;
-  }
-
-  .animation-bar {
-    max-width: 250px;
-  }
-
-  .loading-img {
-    width: 170px;
-  }
-  
-  .loading-wrap > h2 {
-    font-size: 40px;
   }
 }
 

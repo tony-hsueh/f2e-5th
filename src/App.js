@@ -35,8 +35,8 @@ import twitter from './assets/image/twitter.png'
 import instagram from './assets/image/instagram.png'
 import facebook from './assets/image/facebook.png'
 import footerDeco from './assets/image/footer-deco.png'
-import loadingLogo from './assets/image/loading-logo.png'
 import Navbar from './component/Navbar/Navbar'
+import Loading from './component/Loading/Loading'
 import { fakeActives, fakeIssue } from './fakeDb'
 import { MODAL_TYPE, PAY_METHOD } from './constant'
 import './App.css';
@@ -215,7 +215,7 @@ function App() {
   const [issueIndex, setIssueIndex] = useState(0)
   const [counter, setCounter] = useState('0')
   const [toastShow, setToastShow] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   // 建議表單欄位
   const nameInput = useRef()
   const phoneInput = useRef()
@@ -231,7 +231,6 @@ function App() {
   const callback = (entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        console.log('交會囉');
         observer.unobserve(couterDiv.current)
         counterTimer = setInterval(() => {
           setCounter(prev => {
@@ -315,31 +314,26 @@ function App() {
     setDonateShow(true)
   }
 
+  const onLoad = () => {
+    setIsLoading(false)
+  }
+
   useEffect(() => {
     AOS.init()
     window.addEventListener('mousemove', cursorImageMove)
     window.addEventListener('scroll', displayToTopButton)
+    window.addEventListener('load', onLoad)
     observer.observe(couterDiv.current)
     return () => {
-      window.addEventListener('mousemove', cursorImageMove)
+      window.removeEventListener('mousemove', cursorImageMove)
       window.removeEventListener('scroll', displayToTopButton)
+      window.removeEventListener('load', onLoad)
       observer.unobserve(couterDiv.current)
     }
   }, [])
   return (
     <div className="App">
-      {isLoading &&
-        <div className='loading-wrap'>
-          <div className='loading-img'>
-            <img src={loadingLogo} alt="loading-img"/>
-          </div>
-          <h2>喵立翰</h2>
-          <h2>台灣的明天 喵先鋪路</h2>
-          <div className='animation-bar'>
-            <div className='animation-line'></div>
-          </div>
-        </div>
-      }
+      {isLoading && <Loading />}
       {window.innerWidth > 1024 &&
         <img
           style={{ top: cursorCoor.y, left: cursorCoor.x}}
@@ -926,7 +920,7 @@ function App() {
                   />
                 </label>
                 <label htmlFor='comment' className='field'>
-                  <div>建言</div>
+                  <div><span className='required-mark'>*</span>建言</div>
                   <textarea 
                     id='comment' 
                     rows='7' 
